@@ -1,0 +1,35 @@
+Metrics: true
+Default Cooldown: 5
+Crate Protection: true
+Disable Key Swapping: false
+Default Hologram Text:
+- Box %crate%
+Crates:
+  Vote:
+    Winnings:
+      '1':
+        Type: COMMAND
+        Item Type: APPLE
+        Name: '&6&lKit Consommable x1'
+        Percentage: 50
+        Items: 7
+        Commands:
+        - give %name% diamond_sword 1
+      '2':
+        Type: COMMAND
+        Item Type: ENCHANTED_BOOK
+        Name: '&6&lKit Bouffe x1'
+        Percentage: 50
+        Items: 3
+        Commands:
+        - give %name% apple 1
+    Key:
+      Item: STICK
+      Name: Clé de %type%
+      Enchanted: true
+    Knockback: 0.0
+    Broadcast: false
+    Firework: false
+    Preview: true
+    Block: CHEST
+    Color: BLUE

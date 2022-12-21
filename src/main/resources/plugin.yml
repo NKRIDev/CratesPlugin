@@ -1,0 +1,7 @@
+name: CratesPlugin
+main: fr.nkri.crates.MCrates
+version: 1.0
+author: NKRI
+commands:
+  crate:
+    usage: /crate {key, add, recup}

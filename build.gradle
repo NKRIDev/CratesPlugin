@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'fr.nkri'
+version '1.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation files("libs/spigot-1.8.8.jar")
+}
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava.options.encoding = 'UTF-8'
+setLibsDirName('../server/plugins')
