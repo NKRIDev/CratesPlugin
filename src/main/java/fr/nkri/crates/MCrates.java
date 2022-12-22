@@ -27,7 +27,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class MCrates extends JavaPlugin {
     public static MCrates plugin;
@@ -333,6 +332,14 @@ public class MCrates extends JavaPlugin {
         }
         return null;
     }
+
+    public static Crate getCrate() {
+        for (Crate crate : Crates){
+                return crate;
+        }
+        return null;
+    }
+
 
     public static YamlConfiguration getMessage() {
         return message;

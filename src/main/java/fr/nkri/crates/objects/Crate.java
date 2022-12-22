@@ -52,4 +52,6 @@ public class Crate
 	public int getMaxItemGains() {
 		return MaxItemGains;
 	}
+
+
 }

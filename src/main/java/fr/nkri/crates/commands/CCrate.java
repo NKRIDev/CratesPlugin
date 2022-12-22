@@ -3,6 +3,7 @@ package fr.nkri.crates.commands;
 import fr.nkri.crates.MCrates;
 import fr.nkri.crates.manager.CrateManager;
 import fr.nkri.crates.objects.Clef;
+import fr.nkri.crates.objects.Crate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,10 +12,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import static fr.nkri.crates.MCrates.Crates;
 
 public class CCrate implements CommandExecutor {
 
@@ -35,6 +41,22 @@ public class CCrate implements CommandExecutor {
 						player.sendMessage(MCrates.getMessage().getString("lang.not-rewards")
 								.replace("&", "§"));
 					return true;
+				} else if(args[0].equalsIgnoreCase("open")){
+
+					Inventory inventoryCrate = Bukkit.createInventory(null, 54, ChatColor.GRAY + "Box");
+
+
+					for(Crate crate : Crates){
+						ItemStack crateItem = new ItemStack(Material.getMaterial(crate.getBlock()), 1);
+						ItemMeta meta = crateItem.getItemMeta();
+						meta.setDisplayName(crate.getName());
+						crateItem.setItemMeta(meta);
+
+						inventoryCrate.addItem(crateItem);
+					}
+
+					player.openInventory(inventoryCrate);
+
 				}
 			}
 		}

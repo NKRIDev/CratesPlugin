@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.nkri.crates.MCrates;
 import fr.nkri.crates.manager.CrateManager;
+import fr.nkri.crates.objects.Clef;
 import fr.nkri.crates.objects.Crate;
 import fr.nkri.crates.objects.Gain;
 import org.bukkit.Bukkit;
@@ -20,8 +21,8 @@ import org.bukkit.inventory.ItemStack;
 public class EInventory implements Listener {
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
-		if (event.getView().getTitle().contains(" Crate"))
-		{
+
+		if (event.getView().getTitle().contains(" Crate")){
 			for (Crate crate : MCrates.Crates)
 			{
 				if (event.getView().getTitle().equals(ChatColor.DARK_GREEN + crate.getName() + " Crate"))
@@ -31,8 +32,7 @@ public class EInventory implements Listener {
 				}
 			}
 		}
-		else if (event.getView().getTitle().equals(ChatColor.DARK_GREEN + "Récompenses en attente"))
-		{
+		else if (event.getView().getTitle().equals(ChatColor.DARK_GREEN + "Récompenses en attente")){
 			event.setCancelled(true);
 			if (event.getAction().equals(InventoryAction.PICKUP_ALL))
 			{
@@ -42,7 +42,10 @@ public class EInventory implements Listener {
 					List<Gain> gains = MCrates.getRewards(event.getWhoClicked().getName());
 					for (Gain gain : gains)
 					{
-						if (gain.getItem().equals(itemstack.getType().name()) && itemstack.hasItemMeta() && itemstack.getItemMeta().getDisplayName().equals(gain.getName().replaceAll("&", "§")))
+						if (gain.getItem().equals(itemstack.getType().name())
+								&& itemstack.hasItemMeta()
+								&& itemstack.getItemMeta().getDisplayName()
+								.equals(gain.getName().replaceAll("&", "§")))
 						{
 							int empty_slot = 0;
 							for (int i = 0; i < event.getWhoClicked().getInventory().getSize(); i++)
@@ -79,6 +82,60 @@ public class EInventory implements Listener {
 		else if (event.getView().getTitle().contains(ChatColor.DARK_GREEN + "Récompenses "))
 		{
 			event.setCancelled(true);
+		}
+		else if (event.getView().getTitle().equals(ChatColor.GRAY + "Box")){
+			event.setCancelled(true);
+
+			if (event.getAction().equals(InventoryAction.PICKUP_ALL)){
+				if (event.getCurrentItem() != null
+						|| event.getCurrentItem().getType() != Material.AIR){
+
+					ItemStack itemstack = event.getCurrentItem();
+
+					Crate crate = MCrates.getCrate(itemstack.getItemMeta().getDisplayName());
+					Clef clef = crate.getClef();
+
+					ItemStack key = null;
+					for(ItemStack item : event.getWhoClicked().getInventory().getContents()){
+						if (item != null && item.getType() != Material.AIR
+								&& clef.getItem().equals(item.getType().name())
+								&& item.hasItemMeta()
+								&& clef.getName().equals(item.getItemMeta().getDisplayName())){
+
+							key = new ItemStack(item);
+							if(item.getAmount()-1 <= 0) {
+								event.getWhoClicked().getInventory().remove(item);
+							}
+							else {
+								item.setAmount(item.getAmount()-1);
+							}
+						}
+					}
+
+					if(key != null){
+
+						CrateManager.openCrate((Player) event.getWhoClicked(), crate);
+					}
+					else{
+						event.getWhoClicked().sendMessage(MCrates.getMessage().getString("lang.not-key")
+								.replace("%key%", "" + crate.getName())
+								.replace("&", "§"));
+						event.getWhoClicked().closeInventory();
+					}
+
+				}
+			}
+			else{
+				if (event.getCurrentItem() != null
+						|| event.getCurrentItem().getType() != Material.AIR){
+
+					ItemStack itemstack = event.getCurrentItem();
+
+					CrateManager.openPreviewCrate((Player) event.getWhoClicked(),
+							MCrates.getCrate(itemstack.getItemMeta().getDisplayName()));
+				}
+			}
+
 		}
 	}
 }

@@ -2,6 +2,10 @@ plugins {
     id 'java'
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 group 'fr.nkri'
 version '1.0'
 
@@ -14,6 +18,9 @@ dependencies {
     implementation files("libs/spigot-1.8.8.jar")
 }
 
+test{
+    systemProperty "file.encoding", "utf-8"
+}
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava.options.encoding = 'UTF-8'
 setLibsDirName('../server/plugins')
