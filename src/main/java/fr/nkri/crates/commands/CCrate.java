@@ -1,5 +1,6 @@
 package fr.nkri.crates.commands;
 
+import fr.mrcubee.langlib.Lang;
 import fr.nkri.crates.MCrates;
 import fr.nkri.crates.manager.CrateManager;
 import fr.nkri.crates.objects.Clef;
@@ -16,11 +17,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import static fr.nkri.crates.MCrates.Crates;
+import static fr.nkri.crates.MCrates.creates;
 
 public class CCrate implements CommandExecutor {
 
@@ -29,6 +28,7 @@ public class CCrate implements CommandExecutor {
 		if (args.length > 0)
 		{
 			if (sender instanceof Player){
+				final Player playerSender = (Player) sender;
 
 				Player player = (Player)sender;
 				if (args[0].equalsIgnoreCase("recup")){
@@ -38,15 +38,14 @@ public class CCrate implements CommandExecutor {
 						CrateManager.openRecompenses(player);
 					}
 					else
-						player.sendMessage(MCrates.getMessage().getString("lang.not-rewards")
-								.replace("&", "§"));
+						player.sendMessage(Lang.getMessage(playerSender, "reward.empty", "&cLANG ERROR: reward.empty", true));
 					return true;
 				} else if(args[0].equalsIgnoreCase("open")){
 
 					Inventory inventoryCrate = Bukkit.createInventory(null, 54, ChatColor.GRAY + "Box");
 
 
-					for(Crate crate : Crates){
+					for(Crate crate : creates){
 						ItemStack crateItem = new ItemStack(Material.getMaterial(crate.getBlock()), 1);
 						ItemMeta meta = crateItem.getItemMeta();
 						meta.setDisplayName(crate.getName());
@@ -77,10 +76,8 @@ public class CCrate implements CommandExecutor {
 					              nombre = Integer.parseInt(args[3]);
 					        } 
 							catch (Exception e) {
-					              sender.sendMessage(MCrates.getMessage().getString("lang.number-error")
-										  .replace("&", "§"));
-								  sender.sendMessage(MCrates.getMessage().getString("lang.usage")
-										  .replace("&", "§"));
+								  sender.sendMessage(Lang.getMessage("command.invalide.number", "&cLANG ERROR: command.invalide.number", true));
+					              sender.sendMessage(Lang.getMessage("command.usage", "&cLANG ERROR: command.usage", true));
 					              return true;
 					        } 
 						}
@@ -101,10 +98,8 @@ public class CCrate implements CommandExecutor {
 
 								player.getInventory().addItem(key);
 							}
-						    sender.sendMessage(MCrates.getMessage().getString("lang.give-all")
-									.replace("%amount%", "" + nombre)
-									.replace("%key%", "" + clef.getName())
-									.replace("&", "§"));
+							sender.sendMessage(Lang.getMessage("command.self.give.all", "&cLANG ERROR", true,
+									nombre, clef.getName()));
 						    return true;
 						}
 						Player player = Bukkit.getPlayerExact(args[1]);
@@ -113,24 +108,17 @@ public class CCrate implements CommandExecutor {
 							if (player.isOnline()){
 
 								player.getInventory().addItem(key);
-							    sender.sendMessage(MCrates.getMessage().getString("lang.give-player")
-										.replace("%amount%", "" + nombre)
-										.replace("%key%", "" + clef.getName())
-										.replace("%name%", "" +  player.getName()
-										.replace("&", "§")));
-
+								sender.sendMessage(Lang.getMessage("command.self.give.player", "&cLANG ERROR: command.self.give.player", true,
+										nombre, clef.getName(), player.getName()));
 							    return true;
 							}
 						}
-					    sender.sendMessage(MCrates.getMessage().getString("lang.invalide-player")
-								.replace("&", "§"));
+						sender.sendMessage(Lang.getMessage("command.invalide.player", "&cLANG ERROR: command.invalide.player", true));
 					    return true;
 					}
-				    sender.sendMessage(MCrates.getMessage().getString("lang.invalide-box")
-							.replace("&", "§"));
+					sender.sendMessage(Lang.getMessage("box.invalide", "&cLANG ERROR: box.invalide", true));
 				}
-				sender.sendMessage(MCrates.getMessage().getString("lang.usage")
-						.replace("&", "§"));
+				sender.sendMessage(Lang.getMessage("command.usage", "&cLANG ERROR: command.usage", true));
 				return true;
 			}
 			if (args[0].equalsIgnoreCase("add")){
@@ -143,11 +131,9 @@ public class CCrate implements CommandExecutor {
 							CrateManager.giveCrate((Player)sender, MCrates.getCrate(args[1]));
 							return true;
 						}
-					    sender.sendMessage(MCrates.getMessage().getString("lang.invalide-box")
-								.replace("&", "§"));
+						sender.sendMessage(Lang.getMessage("box.invalide", "&cLANG ERROR: box.invalide", true));
 					}
-					sender.sendMessage(MCrates.getMessage().getString("lang.invalide-box")
-							.replace("&", "§"));
+					sender.sendMessage(Lang.getMessage("box.invalide", "&cLANG ERROR: box.invalide", true));
 				}
 			}
 			return true;

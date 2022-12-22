@@ -1,5 +1,6 @@
 package fr.nkri.crates;
 
+import fr.mrcubee.langlib.Lang;
 import fr.nkri.crates.commands.CCrate;
 import fr.nkri.crates.events.EBlock;
 import fr.nkri.crates.events.EInventory;
@@ -31,9 +32,9 @@ import org.bukkit.metadata.MetadataValue;
 public class MCrates extends JavaPlugin {
     public static MCrates plugin;
 
-    public static List<Crate> Crates = new ArrayList<Crate>();
-    private static File DataFile, MessageFile;
-    private static YamlConfiguration data, message;
+    public static List<Crate> creates = new ArrayList<Crate>();
+    private static File dataFile;
+    private static YamlConfiguration data;
 
     @Override
     public void onEnable()
@@ -47,26 +48,14 @@ public class MCrates extends JavaPlugin {
 
     public void loadConfig()
     {
-        MessageFile = new File(getDataFolder(), "lang.yml");
-        if (!MessageFile.exists()) {
-            MessageFile.getParentFile().mkdirs();
-            saveResource("lang.yml", false);
-        }
-        message = new YamlConfiguration();
-        try {
-            message.load(MessageFile);
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
-
-        DataFile = new File(getDataFolder(), "data.yml");
-        if (!DataFile.exists()) {
-            DataFile.getParentFile().mkdirs();
+        dataFile = new File(getDataFolder(), "data.yml");
+        if (!dataFile.exists()) {
+            dataFile.getParentFile().mkdirs();
             saveResource("data.yml", false);
         }
         data = new YamlConfiguration();
         try {
-            data.load(DataFile);
+            data.load(dataFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -96,9 +85,11 @@ public class MCrates extends JavaPlugin {
         }
 
 
-        Crates = new ArrayList<Crate>();
+        creates = new ArrayList<Crate>();
         this.saveDefaultConfig();
         this.reloadConfig();
+        Lang.clean(0);
+        Lang.setDefaultLang(getConfig().getString("lang"));
         ConfigurationSection cratelist = getConfig().getConfigurationSection("Crates");
         Set<String> crates = cratelist.getKeys(false);
         for (String crateName : crates){
@@ -135,7 +126,7 @@ public class MCrates extends JavaPlugin {
             String block = crate.getString("Block");
 
             ColorCrates color = ColorCrates.valueOf(crate.getString("Color"));
-            Crates.add(new Crate(crateName, gains_liste_object, new Clef(item, name, enchanted),
+            creates.add(new Crate(crateName, gains_liste_object, new Clef(item, name, enchanted),
                     kb, broadcast, firework, preview, block, color, MaxItemGains));
         }
     }
@@ -146,7 +137,7 @@ public class MCrates extends JavaPlugin {
 
     public static void saveDataConfig() {
         try {
-            data.save(DataFile);
+            data.save(dataFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -326,7 +317,7 @@ public class MCrates extends JavaPlugin {
     }
 
     public static Crate getCrate(String name) {
-        for (Crate crate : Crates){
+        for (Crate crate : creates){
             if (crate.getName().toLowerCase().equals(name.toLowerCase()))
                 return crate;
         }
@@ -334,14 +325,10 @@ public class MCrates extends JavaPlugin {
     }
 
     public static Crate getCrate() {
-        for (Crate crate : Crates){
+        for (Crate crate : creates){
                 return crate;
         }
         return null;
     }
 
-
-    public static YamlConfiguration getMessage() {
-        return message;
-    }
 }

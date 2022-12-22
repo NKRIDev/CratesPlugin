@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import fr.mrcubee.langlib.Lang;
 import fr.nkri.crates.MCrates;
 import fr.nkri.crates.objects.Crate;
 import fr.nkri.crates.objects.Gain;
@@ -47,9 +48,7 @@ public class CrateManager {
 		else{
 			if (player.getOpenInventory().getTitle().equals(ChatColor.DARK_GREEN + "Récompenses en attente"))
 				player.closeInventory();
-
-			player.sendMessage(MCrates.getMessage().getString("lang.not-rewards-wait")
-					.replace("&", "§"));
+			player.sendMessage(Lang.getMessage(player, "reward.empty", "&cLANG ERROR: reward.empty", true));
 		}
 	}
 	
@@ -185,9 +184,8 @@ public class CrateManager {
 							}
 							else{
 								MCrates.addReward(player.getName(), gain);
-								player.sendMessage(MCrates.getMessage().getString("lang.win")
-										.replace("%gain%", "" + gain.getName().replaceAll("&", "§"))
-										.replace("&", "§"));
+								player.sendMessage(Lang.getMessage(player, "reward.win", "&cLANG ERROR: reward.win", true,
+										ChatColor.translateAlternateColorCodes('&', gain.getName())));
 							}
 						}
 						else{
@@ -231,8 +229,7 @@ public class CrateManager {
 	    crateItem.setItemMeta(crateMeta);
 	    player.getInventory().addItem(crateItem);
 
-	    player.sendMessage(MCrates.getMessage().getString("lang.send-box")
-				.replace("%box%", "" + crate.getName())
-				.replace("&", "§"));
+		player.sendMessage(Lang.getMessage(player, "box.send", "&cLANG ERROR: box.send", true,
+				crate.getName()));
 	}
 }

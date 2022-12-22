@@ -1,26 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
+    }
+}
+
 plugins {
     id 'java'
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
+apply plugin: "com.github.johnrengelman.shadow"
 
 group 'fr.nkri'
 version '1.0'
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven {
+        url 'https://nexus.mrcubee.net/repository/minecraft/'
+    }
 }
 
 dependencies {
-    implementation files("libs/spigot-1.8.8.jar")
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    implementation 'fr.mrcubee.minecraft.library:languagelib:1.0'
 }
 
-test{
-    systemProperty "file.encoding", "utf-8"
+jar {
+    enabled = false
+    dependsOn(shadowJar { classifier = null })
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava.options.encoding = 'UTF-8'
-setLibsDirName('../server/plugins')

@@ -2,6 +2,7 @@ package fr.nkri.crates.events;
 
 import java.util.List;
 
+import fr.mrcubee.langlib.Lang;
 import fr.nkri.crates.MCrates;
 import fr.nkri.crates.manager.CrateManager;
 import fr.nkri.crates.objects.Clef;
@@ -23,7 +24,7 @@ public class EInventory implements Listener {
 	public void onInventoryClick(InventoryClickEvent event) {
 
 		if (event.getView().getTitle().contains(" Crate")){
-			for (Crate crate : MCrates.Crates)
+			for (Crate crate : MCrates.creates)
 			{
 				if (event.getView().getTitle().equals(ChatColor.DARK_GREEN + crate.getName() + " Crate"))
 				{
@@ -117,9 +118,10 @@ public class EInventory implements Listener {
 						CrateManager.openCrate((Player) event.getWhoClicked(), crate);
 					}
 					else{
-						event.getWhoClicked().sendMessage(MCrates.getMessage().getString("lang.not-key")
-								.replace("%key%", "" + crate.getName())
-								.replace("&", "§"));
+						final Player player = (Player) event.getWhoClicked();
+
+						player.sendMessage(Lang.getMessage(player, "key.empty", "&cLANG ERROR: key.empty", true,
+								crate.getName()));
 						event.getWhoClicked().closeInventory();
 					}
 
