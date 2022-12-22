@@ -6,6 +6,7 @@ This plugin offers you the possibility to create many boxes. You can put as many
 • /crate key [player/all] [name box] [amount] (give key)
 • /crate add [name box] (give box in the hand)
 • /crate recup (to recover the rewards)
+• /crate open (open gui Box: same thing as when you click on the box)
 
 Developed by NKRI, this plugin is a beta version.
 Support: https://discord.gg/F8MUXZEy59
