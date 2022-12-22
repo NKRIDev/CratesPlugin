@@ -2,25 +2,26 @@ plugins {
     id 'java'
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
 group 'fr.nkri'
 version '1.0'
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven {
+        url 'https://nexus.mrcubee.net/repository/minecraft/'
+    }
 }
 
 dependencies {
-    implementation files("libs/spigot-1.8.8.jar")
+    compileOnly 'org.spigotmc:spigot-api:1.7.10-R0.1-SNAPSHOT'
 }
 
-test{
-    systemProperty "file.encoding", "utf-8"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
+
+
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava.options.encoding = 'UTF-8'
 setLibsDirName('../server/plugins')
