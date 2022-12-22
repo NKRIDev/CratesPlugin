@@ -1,5 +1,6 @@
 package fr.nkri.crates.events;
 
+import fr.mrcubee.langlib.Lang;
 import fr.nkri.crates.MCrates;
 import fr.nkri.crates.manager.CrateManager;
 import fr.nkri.crates.objects.Clef;
@@ -81,22 +82,18 @@ public class EBlock implements Listener {
 
 			    	}
 			    	else{
-			    		player.sendMessage(MCrates.getMessage().getString("lang.rewards-limite")
-								.replace("&", "§"));
+						player.sendMessage(Lang.getMessage(player, "reward.limit", "&cLANG ERROR: reward.limit", true));
 			    	}
 			   	}
 			   	else{
-
-					player.sendMessage(MCrates.getMessage().getString("lang.not-key")
-							.replace("%key%", "" + crate.getName())
-							.replace("&", "§"));
+					player.sendMessage(Lang.getMessage(player, "key.empty", "&cLANG ERROR: key.empty", true,
+							crate.getName()));
 			    }
 		    }
 		    else if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)){
 
 		    	if (player.isSneaking() && (player.isOp() || player.hasPermission("crates.admin"))){
-		    		event.getPlayer().sendMessage(MCrates.getMessage().getString("lang.delete-box")
-									.replace("&", "§"));
+					player.sendMessage(Lang.getMessage(player, "box.delete", "&cLANG ERROR: box.delete", true));
 					MCrates.removeCrate(crate, clickedBlock.getLocation(), clickedBlock.getType().name());
 			    	clickedBlock.setType(Material.AIR);
 		    	}

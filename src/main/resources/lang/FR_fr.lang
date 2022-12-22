@@ -1,1 +1,17 @@
-reward.limit=
+box.delete=&aVous venez de supprimer la box avec succès.
+box.invalide=&cCette box n'existe pas.
+box.send=&aVous avez reçu la box %s
+
+command.self.give.all=&aVous venez de donner %d %s à tout le monde.
+command.self.give.player=&aVous venez de donner %d %s à %s
+
+command.usage=&cUtilisation: /crate key [player/all] [name box type] [amount]
+command.usage.add=&cUtilisation: /crate add [name box type]
+command.invalide.number=&cNombre invalide.
+command.invalide.player=&cCe joueur est invalide.
+
+key.empty=&cVous n'avez pas la clé: %s
+
+reward.empty=&cVous n'avez pas de récompenses en attente.
+reward.limit=&cVous avez atteint la limite de récompenses en attente.
+reward.win=&aVous avez gagné %s (récompense disponible avec /crate recup)

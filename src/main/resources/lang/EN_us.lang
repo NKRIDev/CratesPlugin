@@ -1,0 +1,17 @@
+box.delete=&aYou have successfully deleted the box.
+box.invalide=&cThis box does not exist.
+box.send=&aYou have received the box %s
+
+command.self.give.all=&aYou have given %d %s to everyone.
+command.self.give.player=&aYou have given %d %s to %s
+
+command.usage=&cUsage: /crate key [player/all] [name box type] [amount]
+command.usage.add=&cUsage: /crate add [name box type]
+command.invalide.number=&cInvalid number.
+command.invalide.player=&cThis player is invalid.
+
+key.empty=&cYou do not have the key: %s
+
+reward.empty=&cYou have no pending rewards.
+reward.limit=&cYou have reached the limit of pending rewards.
+reward.win=&aYou have won %s (reward available with /crate recup)
