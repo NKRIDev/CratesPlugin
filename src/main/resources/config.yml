@@ -1,3 +1,7 @@
+#You can choose between:
+#    French -> FR_fr
+#    English (US)-> EN_us
+lang: EN_us
 Metrics: true
 Default Cooldown: 5
 Crate Protection: true

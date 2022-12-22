@@ -1,5 +1,6 @@
 package fr.nkri.crates;
 
+import fr.mrcubee.langlib.Lang;
 import fr.nkri.crates.commands.CCrate;
 import fr.nkri.crates.events.EBlock;
 import fr.nkri.crates.events.EInventory;
@@ -87,6 +88,8 @@ public class MCrates extends JavaPlugin {
         creates = new ArrayList<Crate>();
         this.saveDefaultConfig();
         this.reloadConfig();
+        Lang.clean(0);
+        Lang.setDefaultLang(getConfig().getString("lang"));
         ConfigurationSection cratelist = getConfig().getConfigurationSection("Crates");
         Set<String> crates = cratelist.getKeys(false);
         for (String crateName : crates){
